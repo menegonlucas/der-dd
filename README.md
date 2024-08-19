@@ -24,7 +24,8 @@ Entrega da atividade DER Biblioteca feita por **Lucas Menegon e Eloá Florêncio
 |---------------------|------------|-----------------------------------------|
 | `num_emprestimo`    | int        | Número único do empréstimo              |
 | `data`              | date       | Data em que o empréstimo foi realizado  |
-| `id_socio`          | int        | ID do sócio que realizou o empréstimo   |
+| `id_socio`          | int        | 
+ID do sócio que realizou o empréstimo   |
 
 ### Entidade: Item_Emprestado
 | Atributo            | Tipo       | Descrição                               |
@@ -33,5 +34,5 @@ Entrega da atividade DER Biblioteca feita por **Lucas Menegon e Eloá Florêncio
 | `codigo_item`       | int        | Código do item emprestado               |
 | `qtd_emprestada`    | int        | Quantidade de itens emprestados
 
-![Exemplo de Imagem](Aluno.png)
+![alunocorrigido](https://github.com/user-attachments/assets/f6cb144c-e56f-49ac-adc0-3ee4494c75c1)
 
