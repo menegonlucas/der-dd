@@ -1,56 +1,33 @@
--- Criação do Banco de Dados
-CREATE DATABASE mercadinho_do_joao;
-
--- Uso do Banco de Dados
-USE mercadinho_do_joao;
-
--- Tabela de Clientes
-CREATE TABLE clientes (
-    cliente_id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    endereco VARCHAR(150),
-    telefone VARCHAR(15),
-    email VARCHAR(100),
-    data_cadastro DATE DEFAULT CURRENT_DATE
+-- Criação da tabela de Itens (Livros, Revistas, Jornais, etc.)
+CREATE TABLE Itens (
+    codigo INTEGER PRIMARY KEY,  -- Código único do item
+    titulo TEXT NOT NULL,         -- Título do item
+    autor TEXT NOT NULL,          -- Autor do item
+    quantidade_estoque INTEGER NOT NULL  -- Quantidade em estoque
 );
 
--- Tabela de Fornecedores
-CREATE TABLE fornecedores (
-    fornecedor_id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    endereco VARCHAR(150),
-    telefone VARCHAR(15),
-    email VARCHAR(100),
-    cnpj VARCHAR(18) UNIQUE NOT NULL
+-- Criação da tabela de Sócios
+CREATE TABLE Socios (
+    socio_id INTEGER PRIMARY KEY, -- ID único do sócio
+    nome TEXT NOT NULL,           -- Nome do sócio
+    endereco TEXT,                -- Endereço do sócio
+    telefone TEXT                 -- Telefone do sócio
 );
 
--- Tabela de Produtos
-CREATE TABLE produtos (
-    produto_id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255),
-    preco DECIMAL(10, 2) NOT NULL,
-    quantidade_estoque INT NOT NULL,
-    fornecedor_id INT,
-    FOREIGN KEY (fornecedor_id) REFERENCES fornecedores(fornecedor_id)
+-- Criação da tabela de Empréstimos
+CREATE TABLE Emprestimos (
+    emprestimo_id INTEGER PRIMARY KEY, -- ID único do empréstimo
+    data_emprestimo DATE NOT NULL,     -- Data do empréstimo
+    socio_id INTEGER NOT NULL,         -- Referência ao sócio que fez o empréstimo
+    FOREIGN KEY (socio_id) REFERENCES Socios(socio_id)
 );
 
--- Tabela de Vendas
-CREATE TABLE vendas (
-    venda_id INT AUTO_INCREMENT PRIMARY KEY,
-    cliente_id INT,
-    data_venda DATE DEFAULT CURRENT_DATE,
-    valor_total DECIMAL(10, 2),
-    FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id)
-);
-
--- Tabela de Itens de Vendas
-CREATE TABLE itens_vendas (
-    item_venda_id INT AUTO_INCREMENT PRIMARY KEY,
-    venda_id INT,
-    produto_id INT,
-    quantidade INT NOT NULL,
-    preco_unitario DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (venda_id) REFERENCES vendas(venda_id),
-    FOREIGN KEY (produto_id) REFERENCES produtos(produto_id)
+-- Criação da tabela de Itens_Emprestimos (Relaciona itens com empréstimos)
+CREATE TABLE Itens_Emprestimos (
+    emprestimo_id INTEGER NOT NULL, -- ID do empréstimo
+    codigo INTEGER NOT NULL,        -- Código do item
+    quantidade INTEGER NOT NULL,    -- Quantidade do item emprestado
+    FOREIGN KEY (emprestimo_id) REFERENCES Emprestimos(emprestimo_id),
+    FOREIGN KEY (codigo) REFERENCES Itens(codigo),
+    PRIMARY KEY (emprestimo_id, codigo)
 );
